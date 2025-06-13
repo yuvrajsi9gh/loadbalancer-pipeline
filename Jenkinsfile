@@ -1,25 +1,29 @@
 pipeline {
-  agent any
+    agent any
 
-  environment {
-    AWS_ACCESS_KEY_ID     = credentials('aws-access-key-id')
-    AWS_SECRET_ACCESS_KEY = credentials('aws-secret-access-key')
-    AWS_REGION            = 'ap-south-1'
-  }
-
-  stages {
-    stage('Checkout') {
-      steps {
-        git 'https://github.com/yuvrajsi9gh/loadbalancer-pipeline'
-      }
+    environment {
+        TF_VAR_region = 'ap-south-1'
     }
 
-    stage('Terraform Init & Apply') {
-      steps {
-        sh 'terraform init -reconfigure'
-        sh 'terraform plan -out=tfplan'
-        sh 'terraform apply -auto-approve tfplan'
-      }
+    parameters {
+        booleanParam(name: 'DESTROY_INFRA', defaultValue: false, description: 'Check to destroy infrastructure')
     }
-  }
+
+    stages {
+        stage('Terraform Init & Destroy/Apply') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'aws_creds', usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+                    script {
+                        sh 'terraform init'
+
+                        if (params.DESTROY_INFRA) {
+                            sh 'terraform destroy -auto-approve'
+                        } else {
+                            sh 'terraform apply -auto-approve'
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
