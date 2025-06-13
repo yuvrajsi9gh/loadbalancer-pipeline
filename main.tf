@@ -15,7 +15,7 @@ provider "aws" {
 resource "aws_instance" "web" {
   count         = 2
   ami           = data.aws_ami.rhel.id
-  instance_type = "t2.micro"
+  instance_type = "t2.medium"
   subnet_id     = data.aws_subnet.ap_south_1a.id
   key_name      = "k8s"
 
