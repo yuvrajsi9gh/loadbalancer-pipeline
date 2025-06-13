@@ -22,7 +22,7 @@ resource "aws_instance" "web" {
   associate_public_ip_address = true
 
   tags = {
-    Name = "Web-${count.index}"
+    Name = "WebServer-${count.index}"
   }
 
   user_data = <<-EOF
