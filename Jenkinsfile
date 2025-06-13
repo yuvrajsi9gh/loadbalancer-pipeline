@@ -8,7 +8,7 @@ pipeline {
   stages {
     stage('Checkout') {
       steps {
-        git url: 'https://github.com/yourname/terraform-alb.git', branch: 'main'
+        git url: 'https://github.com/yuvrajsi9gh/loadbalancer-pipeline', branch: 'main'
       }
     }
 
