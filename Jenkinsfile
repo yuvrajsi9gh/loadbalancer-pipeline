@@ -25,7 +25,7 @@ pipeline {
                     )
                 ]) {
                     script {
-                        sh 'terraform init -input=false'
+                        sh 'terraform init'
 
                         if (params.DESTROY_INFRA) {
                             sh 'terraform destroy -auto-approve'
