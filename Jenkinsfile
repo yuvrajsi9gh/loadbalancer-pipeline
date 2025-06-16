@@ -18,7 +18,7 @@ pipeline {
     stages {
         stage('Clone Repo') {
             steps {
-                git branch: 'prod', url: 'https://github.com/yuvrajsi9gh/loadbalancer-pipeline.git'
+                git branch: 'prod2', url: 'https://github.com/yuvrajsi9gh/loadbalancer-pipeline.git'
             }
         }
 
