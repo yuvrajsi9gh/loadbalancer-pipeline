@@ -1,7 +1,7 @@
-output "elb-dns-name" {
-  value = aws_lb.alb.dns_name
+output "alb_dns" {
+  value = module.alb.alb_dns
 }
 
-output "web_instance_public_ips" {
-  value = aws_instance.web[*].public_ip
+output "instance_ips" {
+  value = module.ec2.public_ips
 }
